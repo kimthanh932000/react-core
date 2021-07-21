@@ -1,0 +1,15 @@
+{
+  "name": "react-core-yeti",
+  "version": "1.0.0",
+  "description": "A NodeJS library to integrate with Yeti-CMS",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node ./src/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
+}
