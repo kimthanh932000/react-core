@@ -19,23 +19,6 @@ const getAxiosInstance = (gatewayUrl, gatewayToken) => {
     return api;
 }
 
-const writeDataToFile = (data, dir) => {
-    const des = path.resolve(__dirname, dir);
-
-    if (!fs.existsSync(des)) {
-        fs.mkdirSync(des);
-    }
-
-    data.forEach(data => {
-        console.log(`--Writing ${data.key} to file...`);
-        fs.writeFile(`${des}/${data.key}.json`, JSON.stringify(data, null, 2), err => {
-            if (err) {
-                console.log(err);
-            }
-        })
-    })
-}
-
 const getPageInfo = async (api) => {
     const res = await api.post('/', {query: Query.pageInfo});
     return res.data.data;
@@ -135,7 +118,7 @@ module.exports = async function (gatewayUrl, gatewayToken) {
 
         const results = await fetchData(promises);
 
-        writeDataToFile(results, './data');
+        return results;
 
     } catch (err) {
         throw err;
