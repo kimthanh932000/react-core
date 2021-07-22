@@ -54,7 +54,7 @@ const getPromises = async (api, pageInfo) => {
 }
 
 const fetchData = async (promises) => {
-    let data = [];
+    let results = [];
     const keys = Object.keys(promises);
     for (let i = 0; i < keys.length; i++) {
         let key = keys[i];
@@ -74,9 +74,9 @@ const fetchData = async (promises) => {
             .catch(err => {
                 console.log(err);
             })
-        data.push({key, data});
+        results.push({key, data});
     }
-    return data;
+    return results;
 }
 
 const formatData = (items, type) => {
