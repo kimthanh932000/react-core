@@ -7,5 +7,11 @@ A `react-core` library to fetch data from `Yetic-CMS` for static sites.
 ```js
 const fetchData = require('react-core-yeti');
 
-fetchData(process.env.GATEWAY_URL, process.env.GATEWAY_TOKEN);
+fetchData(process.env.GATEWAY_URL, process.env.GATEWAY_TOKEN)
+    .then(res = > {
+        //your logic to handle data
+    })
+    .catch(err => {
+        console.log(err);    
+    });
 ```
