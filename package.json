@@ -1,5 +1,5 @@
 {
-  "name": "react-core",
+  "name": "react-core-yeti",
   "version": "0.0.1",
   "description": "A NodeJS library to integrate with Yeti-CMS",
   "main": "src/index.js",
