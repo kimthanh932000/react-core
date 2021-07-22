@@ -1,13 +1,14 @@
 {
-  "name": "react-core-yeti",
-  "version": "1.0.0",
+  "name": "react-core",
+  "version": "0.0.1",
   "description": "A NodeJS library to integrate with Yeti-CMS",
   "main": "src/index.js",
+  "homepage": "https://github.com/kimthanh932000/react-core",
   "scripts": {
     "start": "node ./src/app.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["yeti-cms, react-core"],
+  "author": "thanhtran",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1"
