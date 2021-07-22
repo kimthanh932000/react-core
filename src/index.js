@@ -58,7 +58,7 @@ const fetchData = async (promises) => {
     const keys = Object.keys(promises);
     for (let i = 0; i < keys.length; i++) {
         let key = keys[i];
-        let resultPromises = await Promise.all(promises[key])
+        let data = await Promise.all(promises[key])
             .then((results) => {
                 let items = [];
 
@@ -74,7 +74,7 @@ const fetchData = async (promises) => {
             .catch(err => {
                 console.log(err);
             })
-        data.push({key, resultPromises});
+        data.push({key, data});
     }
     return data;
 }

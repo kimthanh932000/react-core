@@ -1,6 +1,6 @@
 {
   "name": "react-core-yeti",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A NodeJS library to integrate with Yeti-CMS",
   "main": "src/index.js",
   "homepage": "https://github.com/kimthanh932000/react-core",
