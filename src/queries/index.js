@@ -6,6 +6,7 @@ const pages = require('./modules/pages');
 const posts = require('./modules/posts');
 const topics = require('./modules/topics');
 const pageInfo = require('./modules/page-info');
+const resources = require('./modules/resources');
 
 module.exports = {
     articles,
@@ -15,5 +16,6 @@ module.exports = {
     pages,
     posts,
     topics,
-    pageInfo
+    pageInfo,
+    resources
 }

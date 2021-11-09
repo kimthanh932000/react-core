@@ -1,7 +1,5 @@
-const fs = require('fs');
 const Query = require('./queries/index');
 const axios = require('axios');
-const path = require('path');
 
 const getAxiosInstance = (gatewayUrl, gatewayToken) => {
     if (!gatewayUrl) {
@@ -32,7 +30,8 @@ const getPromises = async (api, pageInfo) => {
         pages: [],
         authors: [],
         featured: [],
-        constants: []
+        constants: [],
+        resources: []
     };
 
     const keys = Object.keys(promises);
@@ -66,7 +65,7 @@ const fetchData = async (promises) => {
                     items = ['articles', 'posts', 'topics', 'pages', 'authors'].includes(key) ? [...items, ...result.data.data[key].data] : result.data.data[key]
                 })
 
-                if (['authors', 'topics', 'featured', 'posts'].includes(key)) {
+                if (['authors', 'topics', 'featured', 'posts', 'resources'].includes(key)) {
                     items = formatData(items, key)
                 }
                 return items;
