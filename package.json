@@ -7,10 +7,13 @@
   "scripts": {
     "start": "node src/bin.js"
   },
-  "keywords": ["yeti-cms, react-core"],
+  "keywords": [
+    "yeti-cms, react-core"
+  ],
   "author": "thanhtran",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.21.1",
+    "dotenv": "^10.0.0"
   }
 }

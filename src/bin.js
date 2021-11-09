@@ -1,3 +1,4 @@
+require('dotenv').config();
 const fetchData = require('./index');
 const fs = require('fs');
 const path = require('path');
@@ -19,11 +20,10 @@ const writeDataToFile = (data, dir) => {
     });
 };
 
-const url = 'https://yeti-cms.dev/api';
-const token = '2b0c615afb1b72cf093a5fa6d48c7ef1';
-
-fetchData(url, token)
-    .then(res => console.log(res))
+fetchData(process.env.GATEWAY_URL, process.env.GATEWAY_TOKEN)
+    .then(res => {
+        writeDataToFile(res, '../src/data');
+    })
     .catch((e) => {
         console.log(e);
     });

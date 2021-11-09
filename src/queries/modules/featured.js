@@ -3,6 +3,7 @@ module.exports = `query {
 		id
 		title,
 		url,
+		resource,
 		topic,
 		author,
 		preview,

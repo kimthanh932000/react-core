@@ -18,7 +18,7 @@ const getAxiosInstance = (gatewayUrl, gatewayToken) => {
 }
 
 const getPageInfo = async (api) => {
-    const res = await api.post('/', {query: Query.pageInfo});
+    const res = await api.post('/', { query: Query.pageInfo });
     return res.data.data;
 }
 
@@ -41,11 +41,11 @@ const getPromises = async (api, pageInfo) => {
 
         if (['articles', 'posts', 'topics', 'pages', 'authors'].includes(key)) {
             while (page <= pageInfo[key].paginatorInfo.lastPage) {
-                promises[key].push(api.post('/', {query: Query[key], variables: {'page': page}}));
+                promises[key].push(api.post('/', { query: Query[key], variables: { 'page': page } }));
                 page++;
             }
         } else {
-            promises[key].push(api.post('/', {query: Query[key]}));
+            promises[key].push(api.post('/', { query: Query[key] }));
         }
     })
 
@@ -62,18 +62,18 @@ const fetchData = async (promises) => {
                 let items = [];
 
                 results.forEach(result => {
-                    items = ['articles', 'posts', 'topics', 'pages', 'authors'].includes(key) ? [...items, ...result.data.data[key].data] : result.data.data[key]
+                    items = ['articles', 'posts', 'topics', 'pages', 'authors'].includes(key) ? [...items, ...result.data.data[key].data] : result.data.data[key];
                 })
 
-                if (['authors', 'topics', 'featured', 'posts', 'resources'].includes(key)) {
-                    items = formatData(items, key)
+                if (['authors', 'topics', 'featured', 'posts'].includes(key)) {
+                    items = formatData(items, key);
                 }
                 return items;
             })
             .catch(err => {
                 console.log(err);
             })
-        results.push({key, data});
+        results.push({ key, data });
     }
     return results;
 }
@@ -84,17 +84,22 @@ const formatData = (items, type) => {
 
     switch (type) {
         case 'topics':
-            data = items.map(item => ({...item, related: item.related.map(postId => postId.replace(regex, ''))}))
+            data = items.map(item => ({ ...item, related: item.related.map(postId => postId.replace(regex, '')) }))
             break;
         case 'authors':
-            data = items.map(item => ({...item, latest: item.latest.map(postId => postId.replace(regex, ''))}))
+            data = items.map(item => ({ ...item, latest: item.latest.map(postId => postId.replace(regex, '')) }))
             break;
         case 'featured':
-            data = {...items, author: items.author.replace(regex, ''), topic: items.topic.replace(regex, '')};
+            data = {
+                ...items,
+                author: items.author.replace(regex, ''),
+                topic: items.topic.replace(regex, '')
+            };
             break;
         case 'posts':
             data = items.map(item => ({
-                ...item, ...{
+                ...item,
+                ...{
                     topic: item.topic.replace(regex, ''),
                     author: item.author.replace(regex, '')
                 }

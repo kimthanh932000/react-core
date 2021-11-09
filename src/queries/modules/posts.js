@@ -4,6 +4,7 @@ module.exports = `query($page: Int, $first: Int){
 			id
 			title,
 			url,
+			resource,
 			topic,
 			author,
 			preview,
