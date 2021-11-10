@@ -25,5 +25,5 @@ fetchData(process.env.GATEWAY_URL, process.env.GATEWAY_TOKEN)
         writeDataToFile(res, '../src/data');
     })
     .catch((e) => {
-        console.log(e);
+        console.log('Network error!');
     });

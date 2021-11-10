@@ -113,18 +113,13 @@ const formatData = (items, type) => {
 
 module.exports = async function (gatewayUrl, gatewayToken) {
     console.log('--Fetching data...');
-    try {
-        const api = getAxiosInstance(gatewayUrl, gatewayToken);
+    const api = getAxiosInstance(gatewayUrl, gatewayToken);
 
-        const pageInfo = await getPageInfo(api);
+    const pageInfo = await getPageInfo(api);
 
-        const promises = await getPromises(api, pageInfo);
+    const promises = await getPromises(api, pageInfo);
 
-        const results = await fetchData(promises);
+    const results = await fetchData(promises);
 
-        return results;
-
-    } catch (err) {
-        throw err;
-    }
+    return results;
 }
