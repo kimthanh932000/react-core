@@ -24,7 +24,9 @@ const writeDataToFile = async (data) => {
         promises.push(new Promise((resolve, reject) => {
             fs.writeFile(`${dataPath}/${data.key}.json`, JSON.stringify(data, null, 2), err => {
                 if (!err) {
-                    console.log(`--Saving ${data.key} successfully.`);
+                    if (data.data.length) {
+                        console.log(`--Saving ${data.key} successfully.`);
+                    }
                     resolve();
                 }
                 reject(err);
@@ -39,7 +41,7 @@ const writeDataToFile = async (data) => {
     }
 };
 
-fetch('https://yeti-cms.dev/api', '2b0c615afb1b72cf093a5fa6d48c7ef1')
+fetch('https://yeti-cms.dev/api', '2b0c615afb1b72cf093a5fa6d48c7ef1', ['articles', 'pages', 'topics'])
     .then((res) => writeDataToFile(res))
 .catch(e => {
     throw new Error('Network error!');

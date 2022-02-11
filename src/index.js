@@ -1,5 +1,6 @@
 const Query = require('./queries/index');
 const axios = require('axios');
+const masterDataListOptions = ['articles', 'posts', 'topics', 'pages', 'authors', 'constants', 'featured', 'resources'];
 
 const getAxiosInstance = (gatewayUrl, gatewayToken) => {
     if (!gatewayUrl) {
@@ -22,32 +23,36 @@ const getPageInfo = async (api) => {
     return res.data.data;
 }
 
-const getPromises = async (api, pageInfo) => {
-    const promises = {
-        articles: [],
-        posts: [],
-        topics: [],
-        pages: [],
-        authors: [],
-        featured: [],
-        constants: [],
-        resources: []
-    };
+const getPromises = async (api, pageInfo, options = []) => {
+    const promises = {};
+    if(!options.length) {
+        options = masterDataListOptions;
+    }
+    options.forEach(option => promises[option] = []);
 
     const keys = Object.keys(promises);
 
-    keys.forEach(key => {
-        let page = 1;
+    if(keys.length) {
+        keys.forEach(key => {
+            let page = 1;
 
-        if (['articles', 'posts', 'topics', 'pages', 'authors'].includes(key)) {
-            while (page <= pageInfo[key].paginatorInfo.lastPage) {
-                promises[key].push(api.post('/', { query: Query[key], variables: { 'page': page } }));
-                page++;
+            if (['articles', 'posts', 'topics', 'pages', 'authors'].includes(key)) {
+                while (page <= pageInfo[key].paginatorInfo.lastPage) {
+                    promises[key].push(api.post('/', { query: Query[key], variables: { 'page': page } }));
+                    page++;
+                }
+            } else {
+                promises[key].push(api.post('/', { query: Query[key] }));
             }
-        } else {
-            promises[key].push(api.post('/', { query: Query[key] }));
-        }
-    })
+        })
+    }
+
+    if(options.length !== masterDataListOptions.length) {
+        const optionForEmptyData = masterDataListOptions.filter(opt => !options.includes(opt));
+        optionForEmptyData.forEach(x => {
+            promises[x] = [];
+        });
+    }
 
     return promises;
 }
@@ -61,12 +66,16 @@ const fetchData = async (promises) => {
             .then((results) => {
                 let items = [];
 
-                results.forEach(result => {
-                    items = ['articles', 'posts', 'topics', 'pages', 'authors'].includes(key) ? [...items, ...result.data.data[key].data] : result.data.data[key];
-                })
+                if(!results || !results.length) {
+                    return items;
+                } else {
+                    results.forEach(result => {
+                        items = ['articles', 'posts', 'topics', 'pages', 'authors'].includes(key) ? [...items, ...result?.data?.data[key]?.data || []] : result?.data?.data[key] || [];
+                    })
 
-                if (['authors', 'topics', 'featured', 'posts'].includes(key)) {
-                    items = formatData(items, key);
+                    if (['authors', 'topics', 'featured', 'posts'].includes(key)) {
+                        items = formatData(items, key);
+                    }
                 }
                 return items;
             });
@@ -108,18 +117,14 @@ const formatData = (items, type) => {
     return data;
 }
 
-module.exports = async function (gatewayUrl, gatewayToken) {
+module.exports = async function (gatewayUrl, gatewayToken, options = []) {
     console.log('--Fetching data...');
     try {
         const api = getAxiosInstance(gatewayUrl, gatewayToken);
 
-        const pageInfo = await getPageInfo(api);
-
-        const promises = await getPromises(api, pageInfo);
-
-        const results = await fetchData(promises);
-
-        return results;
+        return await getPageInfo(api)
+            .then(pageInfo => getPromises(api, pageInfo, options))
+            .then(promises => fetchData(promises));
     } catch (err) {
         throw err;
     }

@@ -5,6 +5,7 @@ module.exports = `query($page: Int, $first: Int){
 			name,
 			title,
 			url,
+			anchor,
 			body
 			meta_title,
 			meta_description,
