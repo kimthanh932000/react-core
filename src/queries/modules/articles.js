@@ -5,10 +5,11 @@ module.exports = `query($page: Int, $first: Int){
 			name,
 			title,
 			url,
-			body
+			anchor,
+			body,
 			meta_title,
 			meta_description,
-			created_at
+			created_at,
 			updated_at
 		}
 	}
