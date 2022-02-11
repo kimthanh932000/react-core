@@ -1,11 +1,11 @@
 {
   "name": "react-core-yeti",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A react-core to integrate with Yeti-CMS",
   "main": "src/index.js",
   "homepage": "https://github.com/kimthanh932000/react-core",
   "scripts": {
-    "start": "node src/bin.js"
+    "start": "node ./src/test.js"
   },
   "keywords": [
     "yeti-cms, react-core"
@@ -13,7 +13,6 @@
   "author": "thanhtran",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.1",
-    "dotenv": "^10.0.0"
+    "axios": "^0.21.1"
   }
 }

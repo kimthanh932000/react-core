@@ -69,11 +69,8 @@ const fetchData = async (promises) => {
                     items = formatData(items, key);
                 }
                 return items;
-            })
-            .catch(err => {
-                console.log(err);
-            })
-        results.push({ key, data });
+            });
+        results.push({key, data});
     }
     return results;
 }
